@@ -27,5 +27,6 @@
     "react": {
       "version": "detect"
     }
-  }
+  },
+  "ignorePatterns": ["craco.config.js"]
 }
