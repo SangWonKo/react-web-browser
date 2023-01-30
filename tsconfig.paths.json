@@ -5,6 +5,7 @@
       "@components/*": ["./components/*"],
       "@layouts/*": ["./layouts/*"],
       "@pages/*": ["./pages/*"],
+      "@store/*": ["./store/*"],
       "@styles/*": ["./styles/*"],
       "@hooks/*": ["./hooks/*"],
       "@utils/*": ["./utils/*"]

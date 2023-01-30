@@ -4,14 +4,13 @@ import {
   ReloadOutlined,
 } from '@ant-design/icons'
 import InitialView from '@components/InitialView'
+import useBrowserTab from '@hooks/useBrowserTab'
 import { Button, Input } from 'antd'
-import { useState } from 'react'
 import { useRef } from 'react'
-import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Container = styled.section``
-const ControlSection = styled.div`
+const ControlSection = styled.form`
   padding: 8px;
   background-color: ${(props) => props.theme.palette.gray.main};
   color: white;
@@ -39,25 +38,25 @@ const IframeBrowser = styled.iframe`
 `
 
 const BrowserPage = () => {
-  const { tab } = useParams()
   const iframeRef = useRef<HTMLIFrameElement>(null)
-  const [iframeSrc, setIframeSrc] = useState('')
+
+  const { urlInputVal, setUrlInputVal, activeTab, handleSubmit } =
+    useBrowserTab()
 
   return (
     <Container>
-      <ControlSection>
+      <ControlSection onSubmit={handleSubmit}>
         <IconButton type="text" shape="circle" icon={<ArrowLeftOutlined />} />
         <IconButton type="text" shape="circle" icon={<ArrowRightOutlined />} />
         <IconButton type="text" shape="circle" icon={<ReloadOutlined />} />
-        <StyledInput />
+        <StyledInput
+          value={urlInputVal}
+          onChange={(e) => setUrlInputVal(e.target.value)}
+        />
       </ControlSection>
       {/* {tab} */}
-      {iframeSrc ? (
-        <IframeBrowser
-          src={'https://www.google.com/webhp?igu=1'}
-          ref={iframeRef}
-          id="frame"
-        />
+      {activeTab && activeTab.src ? (
+        <IframeBrowser src={activeTab.src} ref={iframeRef} id="frame" />
       ) : (
         <InitialView />
       )}
