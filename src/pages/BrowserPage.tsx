@@ -6,7 +6,6 @@ import {
 import InitialView from '@components/InitialView'
 import useBrowserTab from '@hooks/useBrowserTab'
 import { Button, Input } from 'antd'
-import { useRef } from 'react'
 import styled from 'styled-components'
 
 const Container = styled.section``
@@ -38,9 +37,7 @@ const IframeBrowser = styled.iframe`
 `
 
 const BrowserPage = () => {
-  const iframeRef = useRef<HTMLIFrameElement>(null)
-
-  const { urlInputVal, setUrlInputVal, activeTab, handleSubmit } =
+  const { urlInputVal, setUrlInputVal, browserTab, handleSubmit } =
     useBrowserTab()
 
   return (
@@ -55,8 +52,8 @@ const BrowserPage = () => {
         />
       </ControlSection>
       {/* {tab} */}
-      {activeTab && activeTab.src ? (
-        <IframeBrowser src={activeTab.src} ref={iframeRef} id="frame" />
+      {browserTab && browserTab.src ? (
+        <IframeBrowser src={browserTab.src} />
       ) : (
         <InitialView />
       )}

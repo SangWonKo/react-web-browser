@@ -1,43 +1,28 @@
-import { browserTabState } from '@store/atom'
+import { browserState } from '@store/atom'
 import { urlRegex } from '@utils/validations'
-import { FormEvent, useCallback, useMemo, useState } from 'react'
+import { FormEvent, useCallback, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 
 const useBrowserTab = () => {
   const { tab } = useParams()
-  const [browserTabs, setBrowserTabs] = useRecoilState(browserTabState)
-
-  const activeTab = useMemo(
-    () => browserTabs.find((tabs) => tabs.key === tab),
-    [browserTabs, tab]
+  const [browserTab, setBrowserTab] = useRecoilState(
+    browserState(tab || 'tab1')
   )
-  const [urlInputVal, setUrlInputVal] = useState(activeTab?.src || '')
+
+  const [urlInputVal, setUrlInputVal] = useState(browserTab.src || '')
 
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      if (!tab) return
 
       const url = getValidatedUrl(urlInputVal)
-
-      console.log(url)
-
-      if (activeTab) {
-        setBrowserTabs((prev) =>
-          prev.map((item) => ({
-            ...item,
-            src: item.key === tab ? url : item.src,
-          }))
-        )
-      } else {
-        setBrowserTabs((prev) => [...prev, { key: tab, src: url }])
-      }
+      setBrowserTab((prev) => ({ ...prev, src: url }))
     },
-    [urlInputVal, activeTab, tab, setBrowserTabs]
+    [urlInputVal, setBrowserTab]
   )
 
-  return { urlInputVal, setUrlInputVal, activeTab, handleSubmit }
+  return { urlInputVal, setUrlInputVal, browserTab, handleSubmit }
 }
 
 export default useBrowserTab

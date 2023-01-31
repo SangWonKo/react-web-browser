@@ -1,13 +1,21 @@
-import { atom } from 'recoil'
+import { atom, atomFamily } from 'recoil'
 
-export interface BrowserUrlType {
-  key: string
+export interface BrowserType {
+  id: string
   src: string
 }
 
-export const browserTabState = atom<BrowserUrlType[]>({
-  key: 'urlState',
-  default: [{ key: 'tab1', src: '' }],
+export const browserTabIdState = atom<string[]>({
+  key: 'browserTabIdState',
+  default: ['tab1'],
+})
+
+export const browserState = atomFamily<BrowserType, string>({
+  key: 'browserState',
+  default: (id) => ({
+    id,
+    src: '',
+  }),
 })
 
 export const recentlyVisitedState = atom<string[]>({

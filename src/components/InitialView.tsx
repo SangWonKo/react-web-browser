@@ -1,4 +1,5 @@
 import { LinkOutlined } from '@ant-design/icons'
+import useBrowserTab from '@hooks/useBrowserTab'
 import { Avatar, Col, Input, Row } from 'antd'
 import styled from 'styled-components'
 
@@ -24,6 +25,10 @@ const Title = styled.h1`
   font-size: 56px;
 `
 
+const Form = styled.form`
+  width: 100%;
+`
+
 const StyledInput = styled(Input)`
   width: 100%;
   border-radius: 20px;
@@ -47,11 +52,21 @@ const GridCol = styled(Col)`
 `
 
 const InitialView = () => {
+  const { urlInputVal, setUrlInputVal, handleSubmit } = useBrowserTab()
+
   return (
     <Container>
       <Wrapper>
         <Title>React Web Browser</Title>
-        <StyledInput size="large" placeholder="Search..." />
+        <Form onSubmit={handleSubmit}>
+          <StyledInput
+            size="large"
+            placeholder="Search..."
+            value={urlInputVal}
+            onChange={(e) => setUrlInputVal(e.target.value)}
+          />
+        </Form>
+
         <GridRow gutter={[16, 8]}>
           {visitedList.map((item) => (
             <GridCol key={item.id} span={6}>
