@@ -43,9 +43,24 @@ const BrowserPage = () => {
   return (
     <Container>
       <ControlSection onSubmit={handleSubmit}>
-        <IconButton type="text" shape="circle" icon={<ArrowLeftOutlined />} />
-        <IconButton type="text" shape="circle" icon={<ArrowRightOutlined />} />
-        <IconButton type="text" shape="circle" icon={<ReloadOutlined />} />
+        <IconButton
+          type="text"
+          shape="circle"
+          icon={<ArrowLeftOutlined />}
+          onClick={() => history.back()}
+        />
+        <IconButton
+          type="text"
+          shape="circle"
+          icon={<ArrowRightOutlined />}
+          onClick={() => history.forward()}
+        />
+        <IconButton
+          type="text"
+          shape="circle"
+          icon={<ReloadOutlined />}
+          onClick={() => document.location.reload()}
+        />
         <StyledInput
           value={urlInputVal}
           onChange={(e) => setUrlInputVal(e.target.value)}
