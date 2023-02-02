@@ -18,7 +18,7 @@ export const browserState = atomFamily<BrowserType, string>({
   }),
 })
 
-export const recentlyVisitedState = atom<string[]>({
-  key: 'recentlyVisitedState',
+export const historyState = atom<string[]>({
+  key: 'historyState',
   default: [],
 })

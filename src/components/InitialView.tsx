@@ -1,6 +1,8 @@
 import { LinkOutlined } from '@ant-design/icons'
 import useBrowserTab from '@hooks/useBrowserTab'
+import { historyState } from '@store/atom'
 import { Avatar, Col, Input, Row } from 'antd'
+import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
 
 const Container = styled.section`
@@ -51,9 +53,16 @@ const GridCol = styled(Col)`
   }
 `
 
-const InitialView = () => {
-  const { urlInputVal, setUrlInputVal, handleSubmit } = useBrowserTab()
+const Typo = styled.p`
+  width: 100%;
+  word-break: break-all;
+  margin-top: 8px;
+`
 
+const InitialView = () => {
+  const { urlInputVal, setUrlInputVal, handleSubmit, handleChangeUrl } =
+    useBrowserTab()
+  const history = useRecoilValue(historyState)
   return (
     <Container>
       <Wrapper>
@@ -68,14 +77,10 @@ const InitialView = () => {
         </Form>
 
         <GridRow gutter={[16, 8]}>
-          {visitedList.map((item) => (
-            <GridCol key={item.id} span={6}>
-              <Avatar
-                size="large"
-                icon={<LinkOutlined />}
-                style={{ marginBottom: '8px' }}
-              />
-              {item.label}
+          {history.map((url, idx) => (
+            <GridCol key={idx} span={6} onClick={() => handleChangeUrl(url)}>
+              <Avatar size="large" icon={<LinkOutlined />} />
+              <Typo>{url}</Typo>
             </GridCol>
           ))}
         </GridRow>
@@ -85,11 +90,3 @@ const InitialView = () => {
 }
 
 export default InitialView
-
-const visitedList = [
-  { id: 1, label: 'page1', value: 'https://www.bing.com' },
-  { id: 2, label: 'page2', value: 'https://www.bing.com' },
-  { id: 3, label: 'page3', value: 'https://www.bing.com' },
-  { id: 4, label: 'page4', value: 'https://www.bing.com' },
-  { id: 5, label: 'page5', value: 'https://www.bing.com' },
-]
