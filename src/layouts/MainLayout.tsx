@@ -60,6 +60,22 @@ const StyledTabs = styled(Tabs)`
       }
     }
   }
+  .ant-tabs-nav-operations {
+    padding: 8px 8px 0;
+    background-color: ${(props) => props.theme.palette.dark};
+    color: white;
+
+    .ant-tabs-nav-add {
+      color: white;
+      &:hover {
+        background-color: ${(props) => props.theme.palette.gray.main};
+        color: white;
+      }
+      &:focus:not(:focus-visible) {
+        color: white;
+      }
+    }
+  }
 `
 
 const { Content } = StyledLayout
@@ -105,6 +121,7 @@ const MainLayout = () => {
             label: tabId,
             key: tabId,
             children: <Outlet />,
+            closable: tabIds.length > 1,
           }))}
           destroyInactiveTabPane
         />
