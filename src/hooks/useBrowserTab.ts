@@ -1,6 +1,6 @@
 import { browserState, historyState } from '@store/atom'
 import { urlRegex } from '@utils/validations'
-import { FormEvent, useCallback, useState } from 'react'
+import { FormEvent, useCallback, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 
@@ -11,7 +11,7 @@ const useBrowserTab = () => {
   )
   const setHistory = useSetRecoilState(historyState)
 
-  const [urlInputVal, setUrlInputVal] = useState(browserTab.src || '')
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleChangeUrl = useCallback(
     (url: string) => {
@@ -24,16 +24,21 @@ const useBrowserTab = () => {
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
 
-      const url = getValidatedUrl(urlInputVal)
+      const inputVal = inputRef.current?.value || ''
+
+      const url = getValidatedUrl(inputVal)
       handleChangeUrl(url)
       setHistory((prev) => [url, ...prev].slice(0, 8))
+
+      if (inputRef.current) {
+        inputRef.current.value = url
+      }
     },
-    [urlInputVal, handleChangeUrl, setHistory]
+    [inputRef, handleChangeUrl, setHistory]
   )
 
   return {
-    urlInputVal,
-    setUrlInputVal,
+    inputRef,
     browserTab,
     handleChangeUrl,
     handleSubmit,

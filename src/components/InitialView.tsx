@@ -1,9 +1,10 @@
 import { LinkOutlined } from '@ant-design/icons'
 import useBrowserTab from '@hooks/useBrowserTab'
 import { historyState } from '@store/atom'
-import { Avatar, Col, Input, Row } from 'antd'
+import { Avatar, Col, Row } from 'antd'
 import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
+import Input from './Input'
 
 const Container = styled.section`
   display: flex;
@@ -31,12 +32,6 @@ const Form = styled.form`
   width: 100%;
 `
 
-const StyledInput = styled(Input)`
-  width: 100%;
-  border-radius: 20px;
-  padding: 7px 14px;
-`
-
 const GridRow = styled(Row)`
   width: 100%;
   margin: 24px;
@@ -57,22 +52,22 @@ const Typo = styled.p`
   width: 100%;
   word-break: break-all;
   margin-top: 8px;
+  text-align: center;
 `
 
 const InitialView = () => {
-  const { urlInputVal, setUrlInputVal, handleSubmit, handleChangeUrl } =
-    useBrowserTab()
+  const { inputRef, handleSubmit, handleChangeUrl } = useBrowserTab()
   const history = useRecoilValue(historyState)
   return (
     <Container>
       <Wrapper>
         <Title>React Web Browser</Title>
         <Form onSubmit={handleSubmit}>
-          <StyledInput
-            size="large"
+          <Input
+            type="text"
             placeholder="Search..."
-            value={urlInputVal}
-            onChange={(e) => setUrlInputVal(e.target.value)}
+            sizeVariant="large"
+            ref={inputRef}
           />
         </Form>
 

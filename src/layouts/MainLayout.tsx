@@ -1,5 +1,6 @@
+import BrowserTabs from '@components/BrowserTabs'
 import { browserTabIdState } from '@store/atom'
-import { Layout, Tabs } from 'antd'
+import { Layout } from 'antd'
 import { KeyboardEvent, MouseEvent, useEffect, useRef } from 'react'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
@@ -8,74 +9,7 @@ import styled from 'styled-components'
 const StyledLayout = styled(Layout)`
   height: 100vh;
   background: white;
-`
-
-const StyledTabs = styled(Tabs)`
-  .ant-tabs-nav {
-    margin: 0;
-    &::before {
-      border: none;
-    }
-  }
-  .ant-tabs-nav-list {
-    width: 100%;
-    padding: 8px 8px 0;
-    background-color: ${(props) => props.theme.palette.dark};
-    color: white;
-    outline: none;
-
-    .ant-tabs-tab {
-      background-color: ${(props) => props.theme.palette.dark};
-      border: none;
-      .ant-tabs-tab-btn {
-        color: white;
-      }
-    }
-    .ant-tabs-tab-active {
-      background-color: ${(props) => props.theme.palette.gray.main};
-      border: none;
-    }
-
-    .ant-tabs-tab-remove {
-      color: white;
-      border-radius: 12px;
-      padding: 1px 5px;
-      &:hover {
-        background-color: ${(props) => props.theme.palette.gray.light};
-      }
-      &:focus {
-        color: white;
-      }
-    }
-
-    .ant-tabs-nav-add {
-      margin-left: auto;
-      color: white;
-      &:hover {
-        background-color: ${(props) => props.theme.palette.gray.main};
-        color: white;
-      }
-      &:focus:not(:focus-visible) {
-        color: white;
-      }
-    }
-  }
-  .ant-tabs-nav-operations {
-    padding: 8px 8px 0;
-    background-color: ${(props) => props.theme.palette.dark};
-    color: white;
-
-    .ant-tabs-nav-add {
-      color: white;
-      &:hover {
-        background-color: ${(props) => props.theme.palette.gray.main};
-        color: white;
-      }
-      &:focus:not(:focus-visible) {
-        color: white;
-      }
-    }
-  }
+  min-width: 640px;
 `
 
 const { Content } = StyledLayout
@@ -112,10 +46,7 @@ const MainLayout = () => {
   return (
     <StyledLayout>
       <Content>
-        <StyledTabs
-          type="editable-card"
-          onChange={(path) => navigate(`${path}`)}
-          onEdit={handleEdit}
+        <BrowserTabs
           activeKey={tab}
           items={tabIds.map((tabId) => ({
             label: tabId,
@@ -123,7 +54,7 @@ const MainLayout = () => {
             children: <Outlet />,
             closable: tabIds.length > 1,
           }))}
-          destroyInactiveTabPane
+          onEdit={handleEdit}
         />
       </Content>
     </StyledLayout>

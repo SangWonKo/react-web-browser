@@ -1,34 +1,9 @@
-import {
-  ArrowLeftOutlined,
-  ArrowRightOutlined,
-  ReloadOutlined,
-} from '@ant-design/icons'
+import BrowserControl from '@components/BrowserControl'
 import InitialView from '@components/InitialView'
 import useBrowserTab from '@hooks/useBrowserTab'
-import { Button, Input } from 'antd'
 import styled from 'styled-components'
 
 const Container = styled.section``
-const ControlSection = styled.form`
-  padding: 8px;
-  background-color: ${(props) => props.theme.palette.gray.main};
-  color: white;
-  display: flex;
-  align-items: center;
-`
-
-const IconButton = styled(Button)`
-  color: white;
-  margin: 0 2px;
-  &:not(:disabled):hover {
-    color: white;
-    background-color: ${(props) => props.theme.palette.gray.light};
-  }
-`
-
-const StyledInput = styled(Input)`
-  margin-left: 4px;
-`
 
 const IframeBrowser = styled.iframe`
   width: 100%;
@@ -37,36 +12,12 @@ const IframeBrowser = styled.iframe`
 `
 
 const BrowserPage = () => {
-  const { urlInputVal, setUrlInputVal, browserTab, handleSubmit } =
-    useBrowserTab()
+  const { browserTab } = useBrowserTab()
 
   return (
     <Container>
-      <ControlSection onSubmit={handleSubmit}>
-        <IconButton
-          type="text"
-          shape="circle"
-          icon={<ArrowLeftOutlined />}
-          onClick={() => history.back()}
-        />
-        <IconButton
-          type="text"
-          shape="circle"
-          icon={<ArrowRightOutlined />}
-          onClick={() => history.forward()}
-        />
-        <IconButton
-          type="text"
-          shape="circle"
-          icon={<ReloadOutlined />}
-          onClick={() => document.location.reload()}
-        />
-        <StyledInput
-          value={urlInputVal}
-          onChange={(e) => setUrlInputVal(e.target.value)}
-        />
-      </ControlSection>
-      {/* {tab} */}
+      <BrowserControl />
+
       {browserTab && browserTab.src ? (
         <IframeBrowser src={browserTab.src} />
       ) : (
