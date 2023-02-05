@@ -1,46 +1,51 @@
-# Getting Started with Create React App
+# React Web Browser
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+개발 기간: 2023.01.28 - 2022.02.03  
+iframe을 활용한 브라우저 클론 토이 프로젝트
+<br />
 
-## Available Scripts
+## 프로젝트 실행 방법
 
-In the project directory, you can run:
+1. install dependencies  
+   `yarn`
 
-### `yarn start`
+2. run project  
+   `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<br />
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Directory 구조
 
-### `yarn test`
+```bash
+└── src
+    ├── components
+    ├── hooks                       #  browser tab url 관리 hook
+    ├── layouts
+    ├── pages
+    ├── store                       #  types & recoil atom
+    ├── styles                      #  theme 관련
+    └── utils
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<br />
 
-### `yarn build`
+## 사용한 기술
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### 1. CRA (Create-React-App)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- 빠르고 간편한 개발 환경 세팅을 위해 React boilerplate인 CRA를 사용하여 프로젝트 설정을 진행하였습니다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### 2. Typescript
 
-### `yarn eject`
+- 컴파일 단계에서의 오류를 미리 잡아낼 수 있는 장점을 가집니다.
+- 명시적인 정적 타입 지정을 통해 코드의 가독성을 높이고 빠른 디버깅을 가능하게 합니다.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### 3. Recoil
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- 비교적 간단한 전역상태 설정과 익숙한 hook 방식의 상태관리를 활용하기 위해 선택하게 되었습니다.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<br />
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 한계점
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+iframe을 통해 외부 도메인 접근할 때 XSS 공격 또는 clickjacking 등을 방지하기 위한 보안 상의 이유로 X-Frame-Options 설정이 되어있는 도메인은 접근할 수 없는 한계가 있습니다.
